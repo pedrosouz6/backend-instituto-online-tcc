@@ -1,11 +1,11 @@
-import { CreateUser } from "../../entities/CreateUser";
-import { ICreateUserRepository } from "../../repositories/ICreateUserRepository";
+import { User } from "../../entities/User";
+import { IUserRepository } from "../../repositories/IUserRepository";
 import { ICreateUserDTO } from "./CreateUserDTO";
 
 export class CreateUserUseCase {
 
     constructor(
-        private createUserRepository: ICreateUserRepository
+        private createUserRepository: IUserRepository
     ) {}
     
     async execute(props: ICreateUserDTO) {
@@ -15,7 +15,7 @@ export class CreateUserUseCase {
             throw new Error('O email ja está em uso');
         }
 
-        const createUser = new CreateUser(props);
+        const createUser = new User(props);
 
         this.createUserRepository.save(createUser);
     }

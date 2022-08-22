@@ -1,9 +1,10 @@
 import express from 'express';
 
+import { router } from './routes';
+
 const app = express();
 
-app.get('/text', (req, res) => {
-    res.send('test');
-})
+app.use(express.json());
+app.use(router);
 
 export { app };
