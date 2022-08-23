@@ -14,7 +14,7 @@ export class CreateUserController {
                 name,
                 email,
                 password
-            })
+            });
 
             return res.status(201).send();
 

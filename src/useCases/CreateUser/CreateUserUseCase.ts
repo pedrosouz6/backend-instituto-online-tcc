@@ -9,7 +9,7 @@ export class CreateUserUseCase {
     ) {}
     
     async execute(props: ICreateUserDTO) {
-        const isEmailAlreadyExists = this.createUserRepository.findByEmail(props.email);
+        const isEmailAlreadyExists = await this.createUserRepository.findByEmail(props.email);
 
         if(isEmailAlreadyExists) {
             throw new Error('O email ja está em uso');

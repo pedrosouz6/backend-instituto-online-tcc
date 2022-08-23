@@ -1,27 +1,34 @@
-import { RowDataPacket } from 'mysql2';
+import { FieldPacket, OkPacket, ResultSetHeader, RowDataPacket } from 'mysql2';
 import { connect } from "../../services/connection";
 
 import { User } from "../../entities/User";
 import { IUserRepository } from "../IUserRepository";
 
+
 export class UserRepository implements IUserRepository {
-    async findByEmail(email: string): Promise<User | null> {
+    async findByEmail(email: string): Promise<User> {
         const sql = `
         SELECT * FROM users 
-        WHERE email = '${email}'`;
+        WHERE email = ?`;
 
-        connect.query(sql, (error, respost: RowDataPacket[]) => {
-            if(respost.length > 0) {
-                return console.log(respost);  
-            }
+        const values = [email];
+        
+        const results: 
+        [
+            RowDataPacket[] & 
+            RowDataPacket[][] & 
+            User[] & OkPacket & 
+            OkPacket[] & 
+            ResultSetHeader, 
+            FieldPacket[]
+        ] = await connect.promise().query(sql, values);
 
-            return console.log('error.message');
-        });
+        const user: User[] = results[0];
 
-        return null;
+        return user[0];
     }
 
     async save(datas: User): Promise<void> {
-        console.log(datas);
+        console.log("datas");
     }
 }
