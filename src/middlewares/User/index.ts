@@ -1,10 +1,26 @@
 import { NextFunction, Request, Response } from "express";
+import { RowDataPacket } from "mysql2";
 
 import { userValidations } from "../../instance/User";
+import { connect } from "../../services/connection";
 
 export class MiddlewareUser {
     createUser(req: Request, res: Response, next: NextFunction): Response {
         const { name, email, password, date, cpf, tel } = req.body;
+
+        const sql = "SELECT * FROM users WHERE email = ?";
+
+        const values = [ email ];
+
+        connect.query(sql, values, (error, results: RowDataPacket[]) => {
+            console.log(results.length);
+            if(results.length > 0) {
+                return res.status(406).json({
+                    error: true,
+                    message: "O e-mail já está em uso"
+                })
+            }
+        });
 
         if(!(name.trim() && date.trim() && password.trim() && email.trim() && cpf.trim() && tel.trim())) {
             return res.status(412).json({
