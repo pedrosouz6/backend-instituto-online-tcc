@@ -1,21 +1,33 @@
 import { Request, Response } from "express";
-import { RowDataPacket } from "mysql2";
+import { FieldPacket, ResultSetHeader } from "mysql2";
 
 import { connect } from '../../services/connection';
 
 export class ControllerUser {
-    createUser(req: Request, res: Response) {
+    async createUser(req: Request, res: Response): Promise<Response> {
         const { name, email, password, date, cpf, tel } = req.body;
 
         const sql = "INSERT INTO users (name, email, password, date, cpf, telephone) VALUES(?, ?, ?, ?, ?, ?)";
         const values: Array<string> = [ name, email, password, date, cpf, tel ];
 
-        connect.query(sql, values, (error, results: RowDataPacket[]) => {
+        try {
+            const [results]: [ResultSetHeader, FieldPacket[]] = await connect.promise().query(sql, values);
+
             if(results) {
-                return res.status(201).json(results);
+                return res.status(201).json({
+                    error: false,
+                    message: "O usuário foi cadastrado com sucesso.",
+                    user: {
+                        name
+                    }
+                });
             }
 
-            return res.send("Erro ao cadastrar um novo usuário");
-        })
+        } catch (err) {
+            return res.status(409).json({
+                error: true,
+                message: "Erro ao cadastrar o usuário."
+            })
+        }
     }
 }

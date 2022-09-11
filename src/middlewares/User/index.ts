@@ -1,31 +1,17 @@
 import { NextFunction, Request, Response } from "express";
-import { RowDataPacket } from "mysql2";
+import { FieldPacket, ResultSetHeader, RowDataPacket } from "mysql2";
 
 import { userValidations } from "../../instance/User";
 import { connect } from "../../services/connection";
 
 export class MiddlewareUser {
-    createUser(req: Request, res: Response, next: NextFunction): Response {
+    dataValidation(req: Request, res: Response, next: NextFunction): Response {
         const { name, email, password, date, cpf, tel } = req.body;
-
-        const sql = "SELECT * FROM users WHERE email = ?";
-
-        const values = [ email ];
-
-        connect.query(sql, values, (error, results: RowDataPacket[]) => {
-            console.log(results.length);
-            if(results.length > 0) {
-                return res.status(406).json({
-                    error: true,
-                    message: "O e-mail já está em uso"
-                })
-            }
-        });
 
         if(!(name.trim() && date.trim() && password.trim() && email.trim() && cpf.trim() && tel.trim())) {
             return res.status(412).json({
                 error: true,
-                message: "Os campos estão vázios"
+                message: "Para cadastrar o usuário é preciso enviar os dados."
             })
         }
 
@@ -75,6 +61,42 @@ export class MiddlewareUser {
                 error: validatedTel.error,
                 message: validatedTel.message
             })
+        }
+
+        next();
+    }
+
+    async findByEmail(req: Request, res: Response, next: NextFunction): Promise<Response> {
+        const { email } = req.body;
+
+        const sql = "SELECT email FROM users WHERE email = ?";
+        const values = [ email ];
+
+        const [results]: [RowDataPacket[], FieldPacket[]] = await connect.promise().query(sql, values);
+
+        if(results.length > 0) {
+            return res.status(412).json({
+                error: true,
+                message: "O e-mail já está cadastrado no banco de dados"
+            });
+        }
+
+        next();
+    }
+
+    async findByCPF(req: Request, res: Response, next: NextFunction): Promise<Response> {
+        const { cpf } = req.body;
+
+        const sql = "SELECT cpf FROM users WHERE cpf = ?";
+        const values = [ cpf ];
+
+        const [results]: [RowDataPacket[], FieldPacket[]] = await connect.promise().query(sql, values);
+
+        if(results.length > 0) {
+            return res.status(412).json({
+                error: true,
+                message: "O CPF já está cadastrado no banco de dados"
+            });
         }
 
         next();
