@@ -30,4 +30,24 @@ export class ControllerUser {
             })
         }
     }
+
+    async getUsers(req: Request, res: Response): Promise<Response> {
+        const sql = "SELECT * FROM users";
+
+        try {
+            const [results] = await connect.promise().query(sql);
+
+            return res.status(200).json({
+                error: false,
+                results
+            });
+            
+        } catch(err) {
+            return res.status(406).json({
+                error: true,
+                message: "Erro ao pegar os usuário do banco de dados"
+            });
+        }
+
+    }
 }

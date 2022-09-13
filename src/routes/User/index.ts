@@ -10,4 +10,6 @@ userRoutes.post('/create-user',
     controllerUser.createUser
 );
 
+userRoutes.get('/get-users', controllerUser.getUsers);
+
 export { userRoutes };
