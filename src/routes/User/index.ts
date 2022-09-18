@@ -10,6 +10,15 @@ userRoutes.post('/create-user',
     controllerUser.createUser
 );
 
-userRoutes.get('/get-users', controllerUser.getUsers);
+userRoutes.put('/update-user', 
+    middlewareUser.dataValidation,
+    middlewareUser.findByEmailUpdate,
+    middlewareUser.findByCPFUpdate,
+    controllerUser.updateUser
+);
+
+userRoutes.get('/get-user', controllerUser.getUser);
+userRoutes.get('/get-user/:id', controllerUser.getOneUser);
+userRoutes.delete('/delete-user/:id', controllerUser.deleteUser);
 
 export { userRoutes };

@@ -101,4 +101,40 @@ export class MiddlewareUser {
 
         next();
     }
+
+    async findByEmailUpdate(req: Request, res: Response, next: NextFunction): Promise<Response> {
+        const { email, id } = req.body;
+
+        const sql = "SELECT email FROM users WHERE id != ? && email = ?";
+        const values = [ id, email ];
+
+        const [ results ]: [RowDataPacket[], FieldPacket[]] = await connect.promise().query(sql, values);
+
+        if(results.length > 0) {
+            return res.status(412).json({
+                error: true,
+                message: "O e-mail já está em uso"
+            });
+        }
+
+        next();
+    }
+
+    async findByCPFUpdate(req: Request, res: Response, next: NextFunction): Promise<Response> {
+        const { cpf, id } = req.body;
+
+        const sql = "SELECT cpf FROM users WHERE id != ? && cpf = ?";
+        const values = [ id, cpf ];
+
+        const [results]: [RowDataPacket[], FieldPacket[]] = await connect.promise().query(sql, values);
+
+        if(results.length > 0) {
+            return res.status(412).json({
+                error: true,
+                message: "O CPF já está cadastrado no banco de dados"
+            });
+        }
+
+        next();
+    }
 }
