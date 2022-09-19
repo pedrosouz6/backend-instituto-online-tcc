@@ -17,7 +17,7 @@ userRoutes.put('/update-user',
     controllerUser.updateUser
 );
 
-userRoutes.get('/get-user', controllerUser.getUser);
+userRoutes.get('/get-users/:limit/:pageNumber', controllerUser.getUser);
 userRoutes.get('/get-user/:id', controllerUser.getOneUser);
 userRoutes.delete('/delete-user/:id', controllerUser.deleteUser);
 
