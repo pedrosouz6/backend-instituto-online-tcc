@@ -8,5 +8,6 @@ CREATE TABLE users(
     password VARCHAR(32) NOT NULL,
     telephone VARCHAR(15) NOT NULL,
     cpf VARCHAR(14) NOT NULL,
-    date DATE NOT NULL
+    date DATE NOT NULL,
+    office VARCHAR(100)
 ) DEFAULT CHARSET=utf8;
