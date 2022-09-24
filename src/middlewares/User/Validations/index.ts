@@ -139,4 +139,12 @@ export class UserValidations {
     
         return { error: false, message: "O Telefone está correto" };
     }
+
+    OfficeValidation(office: string): ValidationReturn {
+        if(!(office === 'fullstack' || office === 'backend' || office === 'frontend' || office === 'devops')) {
+            return { message: 'O cargo não está correto', error: true };
+        }
+    
+        return { message: 'O cargo está correto', error: false };
+    }
 }

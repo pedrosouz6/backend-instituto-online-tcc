@@ -5,10 +5,10 @@ import { connect } from '../../services/connection';
 
 export class ControllerUser {
     async createUser(req: Request, res: Response): Promise<Response> {
-        const { name, email, password, date, cpf, tel } = req.body;
+        const { name, email, password, date, cpf, tel, office } = req.body;
 
-        const sql = "INSERT INTO users (name, email, password, date, cpf, telephone) VALUES(?, ?, ?, ?, ?, ?)";
-        const values: Array<string> = [ name, email, password, date, cpf, tel ];
+        const sql = "INSERT INTO users (name, email, password, date, cpf, telephone, office) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        const values: Array<string> = [ name, email, password, date, cpf, tel, office ];
 
         try {
             const [results]: [ResultSetHeader, FieldPacket[]] = await connect.promise().query(sql, values);

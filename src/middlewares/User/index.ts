@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import { FieldPacket, ResultSetHeader, RowDataPacket } from "mysql2";
+import { FieldPacket, RowDataPacket } from "mysql2";
 
 import { userValidations } from "../../instance/User";
 import { connect } from "../../services/connection";
 
 export class MiddlewareUser {
     dataValidation(req: Request, res: Response, next: NextFunction): Response {
-        const { name, email, password, date, cpf, tel } = req.body;
+        const { name, email, password, date, cpf, tel, office } = req.body;
 
         if(!(name.trim() && date.trim() && password.trim() && email.trim() && cpf.trim() && tel.trim())) {
             return res.status(412).json({
@@ -60,6 +60,14 @@ export class MiddlewareUser {
             return res.status(412).json({
                 error: validatedTel.error,
                 message: validatedTel.message
+            })
+        }
+
+        const validatedOffice = userValidations.OfficeValidation(office);
+        if(validatedOffice.error) {
+            return res.status(412).json({
+                error: validatedOffice.error,
+                message: validatedOffice.message
             })
         }
 
