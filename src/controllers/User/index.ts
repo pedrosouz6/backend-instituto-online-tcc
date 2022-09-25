@@ -31,6 +31,36 @@ export class ControllerUser {
         }
     }
 
+    async login(req: Request, res: Response): Promise<Response> {
+        const { email, password } = req.body;
+
+        const sql = 'SELECT * FROM users WHERE email = ? && password = ?';
+        const values = [ email, password ];
+
+        try {
+            const [ results ]: [RowDataPacket[], FieldPacket[]] = await connect.promise().query(sql, values);
+            
+            if(results.length > 0) {
+                return res.status(200).json({
+                    results,
+                    error: false
+                });
+            }
+
+            if(results.length < 1) {
+                return res.status(402).json({
+                    message: 'A senha está errada',
+                    error: true
+                });
+            }
+        } catch(err) {
+            return res.status(402).json({
+                message: 'Ocorreu um erro ao tentar fazer o login',
+                error: true
+            });
+        }
+    }
+
     async getUser(req: Request, res: Response): Promise<Response> {
         const { limit, pageNumber } = req.params;
         

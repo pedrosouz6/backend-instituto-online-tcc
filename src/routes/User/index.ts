@@ -10,6 +10,11 @@ userRoutes.post('/create-user',
     controllerUser.createUser
 );
 
+userRoutes.post('/login', 
+    middlewareUser.findByEmailLogin,
+    controllerUser.login
+);
+
 userRoutes.put('/update-user', 
     middlewareUser.dataValidation,
     middlewareUser.findByEmailUpdate,

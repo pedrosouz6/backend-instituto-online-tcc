@@ -92,6 +92,24 @@ export class MiddlewareUser {
         next();
     }
 
+    async findByEmailLogin(req: Request, res: Response, next: NextFunction): Promise<Response> {
+        const { email } = req.body;
+
+        const sql = "SELECT email FROM users WHERE email = ?";
+        const values = [ email ];
+
+        const [results]: [RowDataPacket[], FieldPacket[]] = await connect.promise().query(sql, values);
+
+        if(results.length < 1) {
+            return res.status(412).json({
+                error: true,
+                message: "O e-mail não está cadastrado"
+            });
+        }
+
+        next();
+    }
+
     async findByCPF(req: Request, res: Response, next: NextFunction): Promise<Response> {
         const { cpf } = req.body;
 
