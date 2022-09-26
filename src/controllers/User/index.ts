@@ -1,7 +1,20 @@
 import { Request, Response } from "express";
 import { FieldPacket, ResultSetHeader, RowDataPacket } from "mysql2";
+import jwt from 'jsonwebtoken';
+import { config } from "../../services/jwt";
 
 import { connect } from '../../services/connection';
+
+interface User {
+    id: number,
+    name: string,
+    email: string,
+    password: string,
+    telephone: string,
+    cpf: string,
+    date: Date,
+    office: string
+}
 
 export class ControllerUser {
     async createUser(req: Request, res: Response): Promise<Response> {
@@ -38,12 +51,17 @@ export class ControllerUser {
         const values = [ email, password ];
 
         try {
-            const [ results ]: [RowDataPacket[], FieldPacket[]] = await connect.promise().query(sql, values);
-            
+            const [ results ]: [RowDataPacket[] & User[], FieldPacket[]] = await connect.promise().query(sql, values);
+
             if(results.length > 0) {
                 return res.status(200).json({
                     results,
-                    error: false
+                    error: false,
+                    token: jwt.sign(
+                        { id: results[0].id },
+                        config.secret,
+                        { expiresIn: config.expireIn }
+                    )
                 });
             }
 
