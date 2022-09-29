@@ -6,5 +6,5 @@ export const connect = createConnection({
     host: process.env.HOST,
     password: process.env.PASSWORD,
     user: process.env.USER,
-    port: Number(process.env.PORT),
+    port: Number(process.env.PORT_DB),
 });
