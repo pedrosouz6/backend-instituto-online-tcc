@@ -1,4 +1,4 @@
-import express, { Response } from 'express';
+import express, { Response, urlencoded } from 'express';
 import cors from 'cors';
 
 import { userRoutes } from './routes/User';
@@ -10,6 +10,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 app.use('/api', userRoutes);
 app.use('/api', tokenRoute);
