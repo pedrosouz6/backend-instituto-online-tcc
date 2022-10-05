@@ -81,7 +81,7 @@ export class ControllerUser {
     }
 
     async getUser(req: Request, res: Response): Promise<Response> {
-        const { limit, pageNumber, searhUser } = req.params;
+        const { limit, pageNumber } = req.params;
         
         const start = ( Number(limit) * Number(pageNumber) ) - Number(limit);
         const sql = `SELECT * FROM users ORDER BY id ASC LIMIT ${start}, ${limit}`;
