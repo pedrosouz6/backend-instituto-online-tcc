@@ -154,10 +154,10 @@ export class ControllerUser {
     }
     
     async updateUser(req: Request, res: Response) {
-        const { id, name, email, password, date, cpf, tel } = req.body;
+        const { id, name, email, password, date, cpf, tel, office } = req.body;
 
-        const sql = "UPDATE users SET name = ?, email = ?, password = ?, date = ?, cpf = ?, telephone = ? WHERE id = ?";
-        const values: Array<string> = [ name, email, password, date, cpf, tel, id ];
+        const sql = "UPDATE users SET name = ?, email = ?, password = ?, date = ?, cpf = ?, telephone = ?, office = ? WHERE id = ?";
+        const values: Array<string> = [ name, email, password, date, cpf, tel, office, id ];
 
         try {
             const [results]: [ResultSetHeader, FieldPacket[]] = await connect.promise().query(sql, values);
