@@ -56,6 +56,7 @@ export class ControllerUser {
             if(results.length > 0) {
                 return res.status(200).json({
                     results,
+                    message: 'Login realizado',
                     error: false,
                     token: jwt.sign(
                         { id: results[0].id },

@@ -141,7 +141,7 @@ export class UserValidations {
     }
 
     OfficeValidation(office: string): ValidationReturn {
-        if(!(office === 'fullstack' || office === 'backend' || office === 'frontend' || office === 'devops')) {
+        if(!(office === 'diretor' || office === 'gestor' || office === 'rh' || office === 'ti' || office === 'usuario' || office === 'administrador')) {
             return { message: 'O cargo não está correto', error: true };
         }
     

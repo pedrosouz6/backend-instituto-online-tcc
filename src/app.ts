@@ -1,10 +1,8 @@
-import express, { Response, urlencoded } from 'express';
+import express from 'express';
 import cors from 'cors';
 
 import { userRoutes } from './routes/User';
 import { tokenRoute } from './routes/Token';
-import { FieldPacket, RowDataPacket } from 'mysql2';
-import { connect } from './services/connection';
 
 const app = express();
 
