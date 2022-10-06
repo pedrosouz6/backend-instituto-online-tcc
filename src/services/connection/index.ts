@@ -1,5 +1,8 @@
 import { createConnection } from 'mysql2';
-import 'dotenv/config';
+
+require('dotenv').config({  
+    path: process.env.NODE_ENV === "production" ? ".env.production" : ".env.development"
+})
 
 export const connect = createConnection({  
     database: process.env.DATABASE,

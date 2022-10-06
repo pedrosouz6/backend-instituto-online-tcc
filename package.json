@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/server.js",
+    "start": "set NODE_ENV=production && node dist/server.js",
     "build": "rimraf dist && tsc",
-    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts"
+    "dev": "set NODE_ENV=development && ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts"
   },
   "author": "Pedro Souza",
   "license": "MIT",

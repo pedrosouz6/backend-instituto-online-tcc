@@ -98,16 +98,23 @@ export class MiddlewareUser {
         const sql = "SELECT email FROM users WHERE email = ?";
         const values = [ email ];
 
-        const [results]: [RowDataPacket[], FieldPacket[]] = await connect.promise().query(sql, values);
+        try {
+            const [results]: [RowDataPacket[], FieldPacket[]] = await connect.promise().query(sql, values);
+            
+            if(results.length < 1) {
+                return res.status(412).json({
+                    error: true,
+                    message: "O e-mail não está cadastrado"
+                });
+            }
 
-        if(results.length < 1) {
+            next();
+        } catch(err) {
             return res.status(412).json({
                 error: true,
-                message: "O e-mail não está cadastrado"
+                message: "Ocorreu um erro inesperado ao realizar o login"
             });
         }
-
-        next();
     }
 
     async findByCPF(req: Request, res: Response, next: NextFunction): Promise<Response> {

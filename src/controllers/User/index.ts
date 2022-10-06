@@ -53,7 +53,7 @@ export class ControllerUser {
         try {
             const [ results ]: [RowDataPacket[] & User[], FieldPacket[]] = await connect.promise().query(sql, values);
 
-            if(results.length > 0) {
+            if(results.length === 1) {
                 return res.status(200).json({
                     results,
                     message: 'Login realizado',
