@@ -6,7 +6,7 @@ import { config } from "../../services/jwt";
 export class MiddlewareToken {
     async validateToken(req: Request, res: Response, next: NextFunction): Promise<Response> {
         const { token } = req.body;
-
+        
         try {
             const { id } = verify(token, config.secret) as JwtPayload;
             
@@ -26,5 +26,29 @@ export class MiddlewareToken {
                 message: 'O token está inválido'
             })
         }
+    }
+
+    verifyToken(req: Request, res: Response, next: NextFunction) {
+        const tokenBearer = req.headers.authorization;
+
+        if(tokenBearer) {
+            const token = tokenBearer.split(' ')[1];
+
+            try {
+                verify(token, config.secret);
+
+                return next();
+            } catch(err) {
+                return res.status(401).json({
+                    error: true,
+                    message: 'O token está inválido, faça login novamente.'
+                })
+            }
+        }
+
+        return res.status(401).json({
+            error: true,
+            message: 'Você não envio o token'
+        })
     }
 }
