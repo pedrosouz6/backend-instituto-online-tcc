@@ -25,7 +25,7 @@ userRoutes.put('/update-user',
     controllerUser.updateUser
 );
 
-userRoutes.get('/get-users/:limit/:pageNumber',
+userRoutes.get('/get-users/:limit/:pageNumber/:searchUser',
     middlewareToken.verifyToken,
     controllerUser.getUser
 );
