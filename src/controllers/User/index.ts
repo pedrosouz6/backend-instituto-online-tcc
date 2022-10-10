@@ -90,7 +90,6 @@ export class ControllerUser {
         } else {
             searchName = searchUser;
         }
-
         
         const start = ( Number(limit) * Number(pageNumber) ) - Number(limit);
         const sql = `SELECT * FROM users WHERE name LIKE '%${searchName}%' ORDER BY id ASC LIMIT ${start}, ${limit}`;
