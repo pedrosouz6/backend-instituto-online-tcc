@@ -18,7 +18,6 @@ export class ConfigCrypto {
 
         const decipher = crypto.createDecipheriv(process.env.ALG_CRYPTO, process.env.PASSWORD_CRYPTO, Buffer.from(parts[0], 'hex'));
         const plain = decipher.update(parts[1], 'hex', 'utf-8') + decipher.final('utf-8');
-        console.log(plain);
         return plain;
     }
 }

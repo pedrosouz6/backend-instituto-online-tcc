@@ -143,7 +143,6 @@ export class ControllerUser {
 
     async getOneUser(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;
-        console.log(id);
 
         const sql = "SELECT * FROM users WHERE id = ?";
         const values = [ id ];
