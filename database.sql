@@ -11,3 +11,10 @@ CREATE TABLE users(
     date DATE NOT NULL,
     office VARCHAR(100)
 ) DEFAULT CHARSET=utf8;
+
+CREATE TABLE help(
+	id int PRIMARY KEY not null,
+    description varchar(200) not null,
+    status varchar(30) not null,
+    date date not null
+) DEFAULT CHARSET=utf8;
