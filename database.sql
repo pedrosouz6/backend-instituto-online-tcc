@@ -13,8 +13,9 @@ CREATE TABLE users(
 ) DEFAULT CHARSET=utf8;
 
 CREATE TABLE help(
-	id int PRIMARY KEY not null,
-    description varchar(200) not null,
+    id VARCHAR(20) PRIMARY KEY not null,
+    title varchar(100) not null,
+    description varchar(250) not null,
     status varchar(30) not null,
     date date not null
 ) DEFAULT CHARSET=utf8;
