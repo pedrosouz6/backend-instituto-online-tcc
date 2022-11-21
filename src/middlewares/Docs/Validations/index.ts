@@ -3,7 +3,7 @@ interface ValidationReturn {
     message: string
 }
 
-export class UserValidations {
+export class DocsValidations {
     CPFValidation(cpf: string): ValidationReturn {
         cpf = cpf.replace(/[^\d]+/g,'');	
     
@@ -138,13 +138,5 @@ export class UserValidations {
         }
     
         return { error: false, message: "O Telefone está correto" };
-    }
-
-    OfficeValidation(office: string): ValidationReturn {
-        if(!(office === 'diretor' || office === 'gestor' || office === 'Usuário Comum' || office === 'rh' || office === 'ti' || office === 'usuario' || office === 'administrador')) {
-            return { message: 'O cargo não está correto', error: true };
-        }
-    
-        return { message: 'O cargo está correto', error: false };
     }
 }
