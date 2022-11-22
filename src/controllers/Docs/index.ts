@@ -18,18 +18,10 @@ interface Docs {
 
 export class ControllerDocs {
     async getDocs(req: Request, res: Response): Promise<Response> {
-        const { limit, pageNumber, searchDocs } = req.params;
+        const { limit, pageNumber } = req.params;
 
-        let searchName: string;
-
-        if(searchDocs === 'null') {
-            searchName = '';
-        } else {
-            searchName = searchDocs;
-        }
-        
         const start = ( Number(limit) * Number(pageNumber) ) - Number(limit);
-        const sql = `SELECT * FROM users WHERE name LIKE '%${searchName}%' && office = 'Usuário Comum' ORDER BY id ASC LIMIT ${start}, ${limit}`;
+        const sql = `SELECT * FROM users WHERE office = 'Usuário Comum' ORDER BY id ASC LIMIT ${start}, ${limit}`;
         const sqlPagination = "SELECT id FROM users";
 
         try {

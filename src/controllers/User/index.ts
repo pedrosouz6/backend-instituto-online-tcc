@@ -99,8 +99,6 @@ export class ControllerUser {
             const [ resultsPagination ]: [RowDataPacket[], FieldPacket[]] = await connect.promise().query(sqlPagination);
             const [ results ] = await connect.promise().query(sql);
 
-            console.log(results);
-
             const totalUsers = resultsPagination.length;
             const totalPages = Math.ceil(totalUsers / Number(limit));
 
