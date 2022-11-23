@@ -30,6 +30,11 @@ userRoutes.get('/get-users/:limit/:pageNumber/:searchUser',
     controllerUser.getUser
 );
 
+userRoutes.get('/get-usersProjects/:limit/:pageNumber/:searchUser',
+    middlewareToken.verifyToken,
+    controllerUser.getUserProjects
+);
+
 userRoutes.get('/get-user/:id', 
     middlewareToken.verifyToken,        
     controllerUser.getOneUser
