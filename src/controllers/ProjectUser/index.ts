@@ -16,17 +16,19 @@ export class ControllerProjectUser {
             filter = filterProject;
         }
 
-        const sql = `SELECT 
-        project_user.id_project_user,
-        users.name, 
-        users.id,
-        projects.name_projects
-        FROM ((project_user  
-            INNER JOIN projects ON projects.id = project_user.id_project)
-            INNER JOIN users ON users.id = project_user.id_user)
-            WHERE projects.name_projects LIKE '%${filter}%'
-            ORDER BY project_user.id_project_user ASC LIMIT ${start}, 10
-        `;
+        // const sql = `SELECT 
+        // project_user.id_project_user,
+        // users.name, 
+        // users.id,
+        // projects.name_projects
+        // FROM ((project_user  
+        //     INNER JOIN projects ON projects.id = project_user.id_project)
+        //     INNER JOIN users ON users.id = project_user.id_user)
+        //     WHERE projects.name_projects LIKE '%${filter}%'
+        //     ORDER BY project_user.id_project_user ASC LIMIT ${start}, 10
+        // `;
+
+        const sql = "SELECT * FROM project_user";
 
         const sqlPagination = "SELECT id_project_user FROM project_user";
 
@@ -35,7 +37,6 @@ export class ControllerProjectUser {
 
         const totalUsers = resultsPagination.length;
         const totalPages = Math.ceil(totalUsers / Number(10));
-        console.log(totalPages)
 
         res.status(200).json({
             error: false,
