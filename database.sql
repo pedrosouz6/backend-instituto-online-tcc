@@ -14,6 +14,7 @@ CREATE TABLE users(
 
 CREATE TABLE help(
     id VARCHAR(20) PRIMARY KEY not null,
+    id_user INT(11) NOT NULL,
     title varchar(100) not null,
     description varchar(250) not null,
     status varchar(30) not null,
@@ -31,9 +32,3 @@ INSERT INTO projects ( name_projects ) VALUES( "Balé" );
 INSERT INTO projects ( name_projects ) VALUES( "Judô" );
 INSERT INTO projects ( name_projects ) VALUES( "Creches comunitárias" );
 INSERT INTO projects ( name_projects ) VALUES( "Horta" );
-
-CREATE TABLE project_user(
-    id_project_user INT(13) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id_user INT(13) NOT NULL,
-    id_project INT(13) NOT NULL
-) DEFAULT CHARSET=utf8;

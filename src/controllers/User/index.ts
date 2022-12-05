@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { config } from "../../services/jwt";
 
 import { connect } from '../../services/connection';
+import { configCrypto } from "../../instance/Crypto";
 
 interface User {
     id: number,

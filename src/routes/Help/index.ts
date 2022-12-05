@@ -5,7 +5,8 @@ import { Router } from "express";
 
 const helpRouter = Router();
 
-helpRouter.post('/new-called', middlewareHelp.validation, controllerHelp.create);
+helpRouter.post('/new-called', middlewareToken.verifyToken, middlewareHelp.validation, controllerHelp.create);
 helpRouter.get('/get-called', middlewareToken.verifyToken, controllerHelp.get);
+helpRouter.get('/getOne-called/:id', middlewareToken.verifyToken, controllerHelp.getOne);
 
 export { helpRouter };
