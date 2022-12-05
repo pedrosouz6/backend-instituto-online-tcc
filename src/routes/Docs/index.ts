@@ -4,7 +4,7 @@ import { middlewareToken } from '../../instance/Token';
 import { Router } from "express";
 const docsRoutes = Router();
 
-docsRoutes.get('/get-docs/:limit/:pageNumber',
+docsRoutes.get('/get-docs/:limit/:pageNumber/:filterUser',
     middlewareToken.verifyToken,
     controllerDocs.getDocs
 );
