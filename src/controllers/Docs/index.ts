@@ -27,22 +27,23 @@ export class ControllerDocs {
         } else {
             searchName = filterUser;
         }
-
+        
         const start = ( Number(limit) * Number(pageNumber) ) - Number(limit);
-        const sql = `SELECT * FROM users WHERE office = 'Usuário Comum' && name LIKE '%${searchName}%' ORDER BY id ASC LIMIT ${start}, ${limit}`;
-        const sqlPagination = "SELECT id FROM users";
+        const sql = `SELECT * FROM users WHERE name LIKE '%${searchName}%' && office = 'Balé' || office = 'Creches comunitárias' || office = 'Horta' || office = 'Judô'
+        ORDER BY id ASC LIMIT ${start}, ${limit}`;
+        const sqlPagination = "SELECT id FROM users WHERE office = 'Balé' || office = 'Creches comunitárias' || office = 'Horta' || office = 'Judô'";
 
         try {
             const [ resultsPagination ]: [RowDataPacket[], FieldPacket[]] = await connect.promise().query(sqlPagination);
             const [ results ] = await connect.promise().query(sql);
 
-            const totalDocs = resultsPagination.length;
-            const totalPages = Math.ceil(totalDocs / Number(limit));
+            const totalUsers = resultsPagination.length;
+            const totalPages = Math.ceil(totalUsers / Number(limit));
 
             return res.status(200).json({
                 message: 'Usuários obtdos com sucesso',
                 error: false,
-                totalUsers: totalDocs - 1,
+                totalUsers,
                 totalPages,
                 results
             });
